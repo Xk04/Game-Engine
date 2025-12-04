@@ -1,5 +1,7 @@
 package com.model.factories;
 
-public class EntityFactory {
-    
+import com.model.entities.Entity;
+
+public abstract class EntityFactory {
+    public abstract Entity build();
 }

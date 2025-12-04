@@ -1,6 +1,7 @@
 package com.model.entities;
 
 import java.util.LinkedList;
+
 import com.model.components.Component;
 
 public class Entity {
@@ -22,4 +23,7 @@ public class Entity {
     // SETTERS
 
     // Méthodes
+    public void update(float deltaTime) {
+        
+    }
 }

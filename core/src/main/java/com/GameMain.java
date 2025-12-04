@@ -1,4 +1,4 @@
-package com.main;
+package com;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 
 
-public class Main extends ApplicationAdapter {
+public class GameMain extends ApplicationAdapter {
     private SpriteBatch batch;
     private Texture image;
 
