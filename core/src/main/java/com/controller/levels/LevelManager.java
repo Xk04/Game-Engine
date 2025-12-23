@@ -1,10 +1,8 @@
 package com.controller.levels;
 
-import com.badlogic.gdx.Game;
 // === Importations ===
 // LibGDX
 // Engine
-import com.controller.levels.Level;
 import com.controller.levels.concreteLevels.*;
 import com.model.world.GameWorld;
 // Java

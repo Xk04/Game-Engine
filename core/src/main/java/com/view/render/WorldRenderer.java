@@ -3,7 +3,6 @@ package com.view.render;
 // === Importations ===
 // LibGDX
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.model.components.concreteComponents.PositionComponent;
 import com.model.world.GameWorld;
 // Engine
 import com.view.camera.CameraManager;
