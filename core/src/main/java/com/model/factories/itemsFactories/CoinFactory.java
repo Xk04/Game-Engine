@@ -1,4 +1,4 @@
-package com.model.factories.obstacleFactories;
+package com.model.factories.itemsFactories;
 
 // === Importations ===
 // LibGDX
