@@ -1,5 +1,9 @@
 package com.model.components;
 
-public class Component {
+/**
+ * Composant attachable aux entités pour séparer les responsabilités
+ * (ex: physique, rendu, IA, etc.).
+ */
+public abstract class Component {
 
 }

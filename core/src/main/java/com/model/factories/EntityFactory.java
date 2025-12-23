@@ -1,5 +1,14 @@
 package com.model.factories;
 
-public class EntityFactory {
-    
+// === Importations ===
+// LibGDX
+
+// Engine
+import com.model.entities.Entity;
+
+// Java
+// ====================
+
+public abstract class EntityFactory {
+    public abstract Entity create(float x, float y);
 }
