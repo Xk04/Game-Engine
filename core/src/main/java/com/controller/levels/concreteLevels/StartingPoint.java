@@ -40,10 +40,11 @@ public class StartingPoint extends Level {
         this.playerFactory = new PlayerFactory();
 
         map.loadMap(this.getMapPath());
-
         this.entities.put("player1", this.playerFactory.create(300, 300));
-
         this.world = new GameWorld(map.getCurrentMap(), this.entities);
+
+        java.util.List<com.badlogic.gdx.math.Rectangle> walls = map.getCollisionRectangles();
+        this.world.setCollisionRect(walls);
         return world;
     }
 }

@@ -3,11 +3,14 @@ import com.badlogic.gdx.maps.MapProperties;
 // === Importations ===
 // LibGDX
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Rectangle;
 // Engine
 import com.model.entities.Entity;
 // Java
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 // ====================
 
 
@@ -21,10 +24,18 @@ public class GameWorld {
     private TiledMap tiledMap;
     private HashMap<String, Entity> entities;
 
+    private Entity player;
+    private List<Rectangle> collisionRect = new ArrayList<>();
+
     // Constructeurs
     public GameWorld(TiledMap tiledMap, HashMap<String, Entity> newEntities) {
         this.setTiledMap(tiledMap);
         this.setEntities(newEntities);
+
+        if (this.entities.containsKey("player1")) {
+            this.player = this.entities.get("player1");
+        }
+
         System.out.println(this.toString());
     }
 
@@ -35,6 +46,10 @@ public class GameWorld {
 
     public HashMap<String, Entity> getEntities() {
         return this.entities;
+    }
+
+    public Entity getPlayer() {
+        return this.player;
     }
 
     public int getMapWidth() {
@@ -49,6 +64,10 @@ public class GameWorld {
         int height = properties.get("height", Integer.class);
         int tileHeight = properties.get("tileheight", Integer.class);
         return height*tileHeight;
+    }
+
+    public List<Rectangle> getCollisionRect() {
+        return this.collisionRect;
     }
 
     // SETTERS
@@ -71,6 +90,14 @@ public class GameWorld {
         }
     }
 
+    public void setPlayer(Entity p) {
+        this.player = p;
+    }
+    
+    public void setCollisionRect(List<Rectangle> rect) {
+        this.collisionRect = rect;
+    }
+
 
     // Méthodes
     @Override
@@ -78,7 +105,7 @@ public class GameWorld {
         String map = "\n  | Tiled map: " + this.getTiledMap() + ",";
         String width = "\n  | Width: "+ this.getMapWidth() + " px,";
         String height = "\n  | Height: " + this.getMapHeight() + " px,";
-        String player = "\n  | Player: "   + ",";
+        String player = "\n  | Player: " + this.player + ",";
         String entityList = "\n  | Entités: " + this.getEntities();
         return "> Game World:" + map + width + height + player + entityList ;
     }
@@ -89,5 +116,17 @@ public class GameWorld {
 
     public void removeEntity(String entityTag) {
         this.entities.remove(entityTag);
+    }
+
+    public void update(float deltaTime) {
+        // Màj de toutes les entités
+        for (Entity entity : entities.values()) {
+            entity.update(deltaTime, this.collisionRect);
+        }
+
+        // Màj du joueur
+        if (this.player != null) {
+            this.player.update(deltaTime, this.collisionRect);
+        }
     }
 }

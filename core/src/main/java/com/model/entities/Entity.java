@@ -27,14 +27,23 @@ public class Entity {
 
     // GETTERS
     /** Retourne le composant associé ou null (dans le cas où il n'existe pas). */
-    public <T extends Component> T getComponent(Class<T>  componentClass) {
+    public <T extends Component> T getComponent(Class<T> componentClass) {
+         for (Component actualComponent : this.components) {
+             if (componentClass.isInstance(actualComponent)) { // mieux que le ==
+                 return componentClass.cast(actualComponent);
+             }
+         }
+         return null;
+     }
+    
+    /*public <T extends Component> T getComponent(Class<T>  componentClass) {
         for (Component actualComponent : this.components) {
             if (actualComponent.getClass() == componentClass)  {
                 return componentClass.cast(actualComponent);
             }
         }
         return null;
-    }
+    }*/
 
     // SETTERS
     /** Remplace la liste des composants (copie des éléments). */
@@ -53,4 +62,11 @@ public class Entity {
 
     // Méthodes
 
+    // mise à jour de l'entité 
+    public void update(float deltaTime, java.util.List<com.badlogic.gdx.math.Rectangle> walls) {}
+    
+    // surcharge de la méthode update sans murs 
+        public void update(float deltaTime) {
+        update(deltaTime, new java.util.ArrayList<>());
+    }
 }

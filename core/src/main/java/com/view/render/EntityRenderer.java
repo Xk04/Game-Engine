@@ -52,8 +52,17 @@ public class EntityRenderer {
 
     public void drawSprite(SpriteComponent sprite, PositionComponent pos) {
         if (pos != null && sprite != null) {
-            Texture texture = TextureManager.get(sprite.getTexturePath());
-            batch.draw(texture, pos.getX(), pos.getY());
+            
+            // si la texture a une animation
+            if (sprite.getCurrentRegion() != null) {
+                batch.draw(sprite.getCurrentRegion(), pos.getX(), pos.getY());
+            } 
+            else { // sinon on dessine une texture simple
+                Texture texture = TextureManager.get(sprite.getTexturePath());
+                if (texture != null) {
+                    batch.draw(texture, pos.getX(), pos.getY());
+                }
+            }
         }
     }
 }
