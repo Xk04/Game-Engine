@@ -40,7 +40,7 @@ public class PlayerFactory extends EntityFactory {
         player.addComponent(new PositionComponent(x, y));
         player.addComponent(new VelocityComponent(0, 0));
         player.addComponent(new InputComponent());
-        player.addComponent(new HitboxComponent(x, y,24,60));
+        player.addComponent(new HitboxComponent(x, y,31,60));
         player.addComponent(new StateComponent());
         player.addComponent(new PlayerPhysicsComponent());
         AnimationComponent anims = new AnimationComponent();

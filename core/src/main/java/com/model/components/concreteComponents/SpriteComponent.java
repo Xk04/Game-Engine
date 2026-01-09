@@ -8,26 +8,26 @@ import com.model.components.Component;
 // ====================
 
 public class SpriteComponent extends Component {
-    private String texture;
+    private String texturePath;
 
     // Constructeurs
     public SpriteComponent(String texturePath) {
-        this.setTexture(texturePath);
+        this.setTexturePath(texturePath);
     }
 
     // GETTERS
     public String getTexturePath() {
-        return this.texture;
+        return this.texturePath;
     }
 
     // SETTERS
-    public void setTexture(String texturePath) {
+    public void setTexturePath(String texturePath) {
         if (texturePath == "") {
             throw new IllegalAccessError("\n> Impossible de charger une texture vide !");
         } else if (texturePath == null) {
             throw new IllegalAccessError("\n> Impossible de charger une texture \"null\" !");
         } else {
-            this.texture = texturePath;
+            this.texturePath = texturePath;
         }
     }
 

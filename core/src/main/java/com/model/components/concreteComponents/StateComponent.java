@@ -26,7 +26,7 @@ public class StateComponent extends Component {
     public StateComponent() {
         this.etatCourant = IDLE;
         this.etatPrecedent = IDLE;
-        this.stateTime = 0;
+        this.stateTime = 0f;
         this.direction = true;
     }
 

@@ -3,12 +3,15 @@ package com.view.screens;
 // === Importations ===
 // LibGDX
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Gdx;
 // Engine
 import com.model.world.GameWorld;
 import com.view.render.WorldRenderer;
 import com.view.camera.CameraManager;
+import com.controller.PlayerController;
 import com.model.entities.Entity;
 import com.model.components.concreteComponents.PositionComponent;
+import com.model.components.concreteComponents.InputComponent;
 // Java
 // ====================
 
@@ -18,6 +21,7 @@ public class GameScreen implements Screen {
     private final GameWorld world;
     private final WorldRenderer worldRenderer;
     private final CameraManager cameraManager;
+    private PlayerController controller;
 
     public GameScreen(GameWorld world) {
         this.world = world;
@@ -29,6 +33,15 @@ public class GameScreen implements Screen {
         );
 
         this.worldRenderer = new WorldRenderer(world, cameraManager);
+        Entity player = world.getEntities().get("player1");
+        if (player != null) {
+            InputComponent input = player.getComponent(InputComponent.class);
+            if (input != null) {
+                this.controller = new PlayerController(player);
+                Gdx.input.setInputProcessor(this.controller);
+                System.out.println("> Contrôles clavier activés pour player1");
+            }
+        }
     }
 
     @Override
@@ -38,6 +51,7 @@ public class GameScreen implements Screen {
     }
 
     private void update(float delta) {
+        this.world.update(delta);
         Entity player = world.getEntities().get("player1");
         if (player != null) {
             PositionComponent pos = player.getComponent(PositionComponent.class);

@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 // Engine
 import com.model.entities.Entity;
+import com.model.components.concreteComponents.AnimationComponent;
 import com.model.components.concreteComponents.PlayerPhysicsComponent;
 // Java
 import java.util.Map;
@@ -107,7 +108,12 @@ public class GameWorld {
             if (physics != null) {
                 physics.update(entity, deltaTime, walls);
             }
+            AnimationComponent anim = entity.getComponent(AnimationComponent.class);
+            if (anim != null) {
+                anim.update(entity, deltaTime);
+            }
         }
+        
     }
 
 }
