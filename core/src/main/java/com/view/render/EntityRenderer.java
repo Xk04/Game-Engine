@@ -26,8 +26,13 @@ public class EntityRenderer {
     }
 
     // GETTERS
-
+    public SpriteBatch getBatch() {
+        return batch;
+    }    
     // SETTERS
+    public void setBatch(SpriteBatch batch) {
+        this.batch = batch;
+    }
 
     // Méthodes
     public void render(GameWorld world, CameraManager camera) {
@@ -56,4 +61,6 @@ public class EntityRenderer {
             batch.draw(texture, pos.getX(), pos.getY());
         }
     }
+
+    
 }

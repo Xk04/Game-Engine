@@ -2,7 +2,7 @@ package com.controller.levels.concreteLevels;
 
 // === Importations ===
 // LibGDX
-
+import com.badlogic.gdx.math.Vector2;
 // Engine
 import com.model.world.GameWorld;
 import com.model.world.MapLoader;
@@ -40,9 +40,11 @@ public class StartingPoint extends Level {
         this.playerFactory = new PlayerFactory();
 
         map.loadMap(this.getMapPath());
+        Vector2 spawnPoint = map.getPlayerStart();
 
-        this.entities.put("player1", this.playerFactory.create(300, 300));
-
+        //this.entities.put("player1", this.playerFactory.create(300, 300));
+        this.entities.put("player1", this.playerFactory.create(spawnPoint.x, spawnPoint.y));
+        
         this.world = new GameWorld(map.getCurrentMap(), this.entities);
         return world;
     }

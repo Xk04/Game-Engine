@@ -13,7 +13,7 @@ public class HitboxComponent extends Component {
 
     // Constructeurs
     public HitboxComponent(float x, float y, float width, float height) {
-        this.setBounds(x, y, width, height);
+        this.bounds = new Rectangle(x, y, width, height);
     }
 
     // GETTERS

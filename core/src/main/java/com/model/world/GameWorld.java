@@ -1,13 +1,16 @@
 package com.model.world;
-import com.badlogic.gdx.maps.MapProperties;
 // === Importations ===
 // LibGDX
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Rectangle;
 // Engine
 import com.model.entities.Entity;
+import com.model.components.concreteComponents.PlayerPhysicsComponent;
 // Java
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
 // ====================
 
 
@@ -20,11 +23,13 @@ import java.util.HashMap;
 public class GameWorld { 
     private TiledMap tiledMap;
     private HashMap<String, Entity> entities;
+    private MapLoader mapLoader;
 
     // Constructeurs
     public GameWorld(TiledMap tiledMap, HashMap<String, Entity> newEntities) {
         this.setTiledMap(tiledMap);
         this.setEntities(newEntities);
+        this.mapLoader = new MapLoader(tiledMap);
         System.out.println(this.toString());
     }
 
@@ -90,4 +95,19 @@ public class GameWorld {
     public void removeEntity(String entityTag) {
         this.entities.remove(entityTag);
     }
+
+    public void update(float deltaTime) {
+        
+        List<Rectangle> walls = mapLoader.getCollisionRectangles();
+        
+        for (Entity entity : entities.values()) {
+            
+            PlayerPhysicsComponent physics = entity.getComponent(PlayerPhysicsComponent.class);
+            
+            if (physics != null) {
+                physics.update(entity, deltaTime, walls);
+            }
+        }
+    }
+
 }

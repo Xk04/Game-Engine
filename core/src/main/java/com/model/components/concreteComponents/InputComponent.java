@@ -12,32 +12,37 @@ public class InputComponent extends Component {
     private boolean down;
     private boolean left;
     private boolean right;
+    private boolean space;
 
     // Constructeurs
     public InputComponent() {
-        this.setUp(false);
-        this.setDown(false);
-        this.setLeft(false);
-        this.setRight(false);
+        this.up = false;
+        this.down = false;
+        this.left = false;
+        this.right = false;
+        this.space = false;
     }
 
     // GETTERS
-    public boolean getUp() {
+    public boolean isUp() {
         return this.up;
     }
-    
-    public boolean getDown() {
+
+    public boolean isDown() {
         return this.down;
     }
-    
-    public boolean getLeft() {
+
+    public boolean isLeft() {
         return this.left;
     }
-    
-    public boolean getRight() {
+
+    public boolean isRight() {
         return this.right;
     }
 
+    public boolean isSpace() {
+        return space;
+    }
     // SETTERS
     public void setUp(boolean state) {
         this.up = state;
@@ -55,7 +60,12 @@ public class InputComponent extends Component {
         this.right = state;
     }
 
+    public void setSpace(boolean space) {
+        this.space = space;
+    }
     // Méthodes
+
+
 
     
 }
