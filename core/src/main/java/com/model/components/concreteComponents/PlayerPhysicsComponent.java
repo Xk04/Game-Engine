@@ -86,7 +86,6 @@ public class PlayerPhysicsComponent extends Component {
                 if (isGrounded) state.setEtatCourant(StateComponent.IDLE);
             }
 
-            // Saut (seulement si au sol)
             if (input.isSpace() && isGrounded) {
                 velocity.setVY(jumpForce);
                 isGrounded = false;
@@ -94,53 +93,46 @@ public class PlayerPhysicsComponent extends Component {
             }
         }
 
-        // 2. APPLIQUER LA GRAVITÉ (Axe Y)
-        // On augmente la vitesse de chute progressivement
+        
         float currentVY = velocity.getVY();
         velocity.setVY(currentVY + (gravity * deltaTime));
 
 
-        // 3. APPLIQUER LE MOUVEMENT X + COLLISIONS
         float oldX = position.getX();
-        float newX = oldX + (velocity.getVX() * deltaTime); // Vitesse * Temps = Distance
+        float newX = oldX + (velocity.getVX() * deltaTime); 
         
         position.setX(newX);
-        hitbox.setX(newX); // On déplace aussi la hitbox pour tester
+        hitbox.setX(newX);
 
         for (Rectangle wall : walls) {
             if (hitbox.getBounds().overlaps(wall)) {
-                // Boum ! Mur touché -> on annule le mouvement X
                 position.setX(oldX);
                 hitbox.setX(oldX);
                 break; 
             }
         }
 
-        // 4. APPLIQUER LE MOUVEMENT Y + COLLISIONS
         float oldY = position.getY();
         float newY = oldY + (velocity.getVY() * deltaTime);
 
         position.setY(newY);
         hitbox.setY(newY);
         
-        // Par défaut, on n'est pas au sol (on tombe)
         isGrounded = false; 
 
         for (Rectangle wall : walls) {
             if (hitbox.getBounds().overlaps(wall)) {
-                // Si on tombait (Vitesse négative) -> On atterrit sur le SOL
                 if (velocity.getVY() < 0) {
-                    position.setY(wall.y + wall.height); // On se pose juste au-dessus
+                    position.setY(wall.y + wall.height);
                     isGrounded = true;
-                    velocity.setVY(0); // On arrête de tomber
+                    velocity.setVY(0);
                 }
-                // Si on sautait (Vitesse positive) -> On se cogne au PLAFOND
+                
                 else if (velocity.getVY() > 0) {
                     position.setY(wall.y - hitbox.getHeight()); 
                     velocity.setVY(0);
                 }
                 
-                // On met à jour la hitbox avec la position corrigée
                 hitbox.setY(position.getY());
                 break;
             }

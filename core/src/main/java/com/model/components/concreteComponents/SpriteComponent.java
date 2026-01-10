@@ -12,7 +12,7 @@ public class SpriteComponent extends Component {
 
     // Constructeurs
     public SpriteComponent(String texturePath) {
-        this.setTexturePath(texturePath);
+        this.texturePath = texturePath;
     }
 
     // GETTERS
