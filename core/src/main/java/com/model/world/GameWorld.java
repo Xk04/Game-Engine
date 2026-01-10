@@ -1,14 +1,17 @@
 package com.model.world;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
 // === Importations ===
 // LibGDX
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 // Engine
 import com.model.entities.Entity;
-import com.model.components.concreteComponents.AnimationComponent;
-import com.model.components.concreteComponents.HitboxComponent;
-import com.model.components.concreteComponents.PlayerPhysicsComponent;
+import com.model.components.concreteComponents.*;
+
 // Java
 import java.util.Map;
 import java.util.HashMap;
@@ -26,12 +29,15 @@ public class GameWorld {
     private TiledMap tiledMap;
     private HashMap<String, Entity> entities;
     private MapLoader mapLoader;
+    private Vector2 spawnLocation;
 
     // Constructeurs
     public GameWorld(TiledMap tiledMap, HashMap<String, Entity> newEntities) {
         this.setTiledMap(tiledMap);
         this.setEntities(newEntities);
         this.mapLoader = new MapLoader(tiledMap);
+        this.spawnLocation = mapLoader.getPlayerStart();
+        System.out.println("> Spawn sauvegardé en : " + spawnLocation);
         System.out.println(this.toString());
     }
 
@@ -116,8 +122,6 @@ public class GameWorld {
         }
         Rectangle endZone = mapLoader.getEndZone();
         if (endZone != null) {
-            // On récupère la hitbox du joueur
-            // (Note: Dans un vrai code propre, on éviterait de faire get("player1") à chaque frame, mais pour l'instant ça va)
             Entity player = entities.get("player1");
             if (player != null) {
                 HitboxComponent hitbox = player.getComponent(HitboxComponent.class);
@@ -127,7 +131,60 @@ public class GameWorld {
                 }
             }
         }
+        checkPlayerFall();
         
+    }
+
+    private void checkPlayerFall() {
+        Entity player = entities.get("player1");
+        if (player != null) {
+            PositionComponent pos = player.getComponent(PositionComponent.class);
+            
+            if (pos != null && pos.getY() < -300) {
+                respawnPlayer(player);
+            }
+        }
+    }
+
+    private void respawnPlayer(Entity player) {
+        if (spawnLocation == null) return;
+
+        System.out.println("MORT ! Respawn en " + spawnLocation);
+
+        PositionComponent pos = player.getComponent(PositionComponent.class);
+        VelocityComponent vel = player.getComponent(VelocityComponent.class);
+        HitboxComponent hitbox = player.getComponent(HitboxComponent.class);
+
+        if (pos != null) {
+            pos.setX(spawnLocation.x);
+            pos.setY(spawnLocation.y);
+        }
+
+        if (vel != null) {
+            vel.setVX(0);
+            vel.setVY(0);
+        }
+
+        if (hitbox != null) {
+            hitbox.setX(spawnLocation.x);
+            hitbox.setY(spawnLocation.y);
+        }
+    }
+
+    public Vector2 getPlayerStart() {
+        MapLayer objectLayer = tiledMap.getLayers().get("objects");
+        
+        if (objectLayer != null) {
+            for (MapObject object : objectLayer.getObjects()) {
+                if (object instanceof RectangleMapObject) {
+                    if ("Start".equals(object.getName())) {
+                        Rectangle rect = ((RectangleMapObject) object).getRectangle();
+                        return new Vector2(rect.x, rect.y);
+                    }
+                }
+            }
+        }
+        return new Vector2(100, 300);
     }
 
 }

@@ -129,6 +129,19 @@ public class MapLoader {
                 }
             }
         }
+        MapLayer objectLayer = currentMap.getLayers().get("objects");
+        if (objectLayer != null) {
+            for (MapObject object : objectLayer.getObjects()) {
+                if (object instanceof RectangleMapObject) {
+                    
+                    // C'est ici qu'on filtre spécifiquement par le nom "Wall"
+                    if ("Wall".equals(object.getName())) {
+                        collisions.add(((RectangleMapObject) object).getRectangle());
+                    }
+                    
+                }
+            }
+        }
         return collisions;
     }
 
