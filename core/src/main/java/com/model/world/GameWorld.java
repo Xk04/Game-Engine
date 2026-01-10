@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 // Engine
 import com.model.entities.Entity;
 import com.model.components.concreteComponents.AnimationComponent;
+import com.model.components.concreteComponents.HitboxComponent;
 import com.model.components.concreteComponents.PlayerPhysicsComponent;
 // Java
 import java.util.Map;
@@ -111,6 +112,19 @@ public class GameWorld {
             AnimationComponent anim = entity.getComponent(AnimationComponent.class);
             if (anim != null) {
                 anim.update(entity, deltaTime);
+            }
+        }
+        Rectangle endZone = mapLoader.getEndZone();
+        if (endZone != null) {
+            // On récupère la hitbox du joueur
+            // (Note: Dans un vrai code propre, on éviterait de faire get("player1") à chaque frame, mais pour l'instant ça va)
+            Entity player = entities.get("player1");
+            if (player != null) {
+                HitboxComponent hitbox = player.getComponent(HitboxComponent.class);
+                
+                if (hitbox != null && hitbox.getBounds().overlaps(endZone)) {
+                    //System.out.println("Niveau terminé ! Bravo Santa !");
+                }
             }
         }
         

@@ -159,6 +159,21 @@ public class MapLoader {
         return new Vector2(100, 300);
     }
 
+    public Rectangle getEndZone() {
+        MapLayer layer = currentMap.getLayers().get("objects");
+        if (layer == null) return null;
+
+        for (MapObject object : layer.getObjects()) {
+            if (object instanceof RectangleMapObject) {
+                // On cherche l'objet qui s'appelle "End"
+                if ("End".equals(object.getName())) {
+                    return ((RectangleMapObject) object).getRectangle();
+                }
+            }
+        }
+        return null; // Pas de fin trouvée
+    }
+
 }
 
 
