@@ -10,26 +10,16 @@ import com.model.components.concreteComponents.*;
 // Java
 // ====================
 
+
 /** Factory simple pour créer un joueur. */
 public class PlayerFactory extends EntityFactory {
-    // player params
-    /*private float vx;
-    private float vy;
-    private String texturePath;
-    private int hitboxWidth;
-    private int hitboxHeight;*/
 
     // Constructeurs
     public PlayerFactory() {
-        /*this.vx = 1;
-        this.vy = 1;
-        this.texturePath = "textures/ennemies/yeti_idle1.png";
-        this.hitboxWidth = 0;
-        this.hitboxHeight = 0;*/
+
     }
 
     // GETTERS
-
 
     // SETTERS
     
@@ -42,7 +32,7 @@ public class PlayerFactory extends EntityFactory {
         player.addComponent(new InputComponent());
         player.addComponent(new HitboxComponent(x, y,30,60));
         player.addComponent(new StateComponent());
-        player.addComponent(new PlayerPhysicsComponent());
+        player.addComponent(new PhysicsComponent());
         AnimationComponent anims = new AnimationComponent();
         // Chargement des fichiers d'animation
         anims.addAnimation(StateComponent.IDLE, "textures/player/santa_idle", 16, 0.1f);

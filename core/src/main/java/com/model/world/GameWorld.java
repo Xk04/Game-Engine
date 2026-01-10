@@ -1,21 +1,15 @@
 package com.model.world;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapProperties;
 // === Importations ===
 // LibGDX
-import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 // Engine
 import com.model.entities.Entity;
-import com.model.components.concreteComponents.*;
-
+import com.model.systems.*;
 // Java
 import java.util.Map;
 import java.util.HashMap;
-import java.util.List;
 // ====================
 
 
@@ -29,19 +23,26 @@ public class GameWorld {
     private TiledMap tiledMap;
     private HashMap<String, Entity> entities;
     private MapLoader mapLoader;
+
+
     private Vector2 spawnLocation;
 
     // Constructeurs
-    public GameWorld(TiledMap tiledMap, HashMap<String, Entity> newEntities) {
-        this.setTiledMap(tiledMap);
+    public GameWorld(MapLoader map, String mapPath, HashMap<String, Entity> newEntities) {
         this.setEntities(newEntities);
-        this.mapLoader = new MapLoader(tiledMap);
+        this.mapLoader = map;
+        this.mapLoader.loadMap(mapPath);
+        this.tiledMap = this.mapLoader.getCurrentMap();
         this.spawnLocation = mapLoader.getPlayerStart();
         System.out.println("> Spawn sauvegardé en : " + spawnLocation);
         System.out.println(this.toString());
     }
 
     // GETTERS
+    public MapLoader getMapLoader() {
+        return mapLoader;
+    }
+
     public TiledMap getTiledMap() {
         return this.tiledMap;
     }
@@ -65,7 +66,7 @@ public class GameWorld {
     }
 
     // SETTERS
-    private void setTiledMap(TiledMap tiledMap) {
+    public void setTiledMap(TiledMap tiledMap) {
         if (tiledMap == null) {
             throw new IllegalAccessError("\n> Erreur lors de l'initialisation de la map Tiled\n" + "| Veuillez saisir une map non \"null\"");
         } else {
@@ -73,7 +74,7 @@ public class GameWorld {
         }
     }
 
-    private void setEntities(HashMap<String, Entity> entityMap) {
+    public void setEntities(HashMap<String, Entity> entityMap) {
         if (entities == null) {
             this.entities = new HashMap<String, Entity>();
         } 
@@ -104,87 +105,13 @@ public class GameWorld {
         this.entities.remove(entityTag);
     }
 
-    public void update(float deltaTime) {
-        
-        List<Rectangle> walls = mapLoader.getCollisionRectangles();
-        
-        for (Entity entity : entities.values()) {
-            
-            PlayerPhysicsComponent physics = entity.getComponent(PlayerPhysicsComponent.class);
-            
-            if (physics != null) {
-                physics.update(entity, deltaTime, walls);
-            }
-            AnimationComponent anim = entity.getComponent(AnimationComponent.class);
-            if (anim != null) {
-                anim.update(entity, deltaTime);
-            }
+    public void update(float dt) {
+
+        for (Map.Entry<String, Entity> entity : this.entities.entrySet()) {
+            PhysicsSystem.update(this.mapLoader, entity, dt);
+            AnimationSystem.update(entity, dt);
+            CollisionSystem.update(this.mapLoader, entity, dt);
         }
-        Rectangle endZone = mapLoader.getEndZone();
-        if (endZone != null) {
-            Entity player = entities.get("player1");
-            if (player != null) {
-                HitboxComponent hitbox = player.getComponent(HitboxComponent.class);
-                
-                if (hitbox != null && hitbox.getBounds().overlaps(endZone)) {
-                    System.out.println("Niveau terminé ! Bravo Santa !");
-                }
-            }
-        }
-        checkPlayerFall();
         
     }
-
-    private void checkPlayerFall() {
-        Entity player = entities.get("player1");
-        if (player != null) {
-            PositionComponent pos = player.getComponent(PositionComponent.class);
-            
-            if (pos != null && pos.getY() < -300) {
-                respawnPlayer(player);
-            }
-        }
-    }
-
-    private void respawnPlayer(Entity player) {
-        if (spawnLocation == null) return;
-
-        System.out.println("MORT ! Respawn en " + spawnLocation);
-
-        PositionComponent pos = player.getComponent(PositionComponent.class);
-        VelocityComponent vel = player.getComponent(VelocityComponent.class);
-        HitboxComponent hitbox = player.getComponent(HitboxComponent.class);
-
-        if (pos != null) {
-            pos.setX(spawnLocation.x);
-            pos.setY(spawnLocation.y);
-        }
-
-        if (vel != null) {
-            vel.setVX(0);
-            vel.setVY(0);
-        }
-
-        if (hitbox != null) {
-            hitbox.setX(spawnLocation.x);
-            hitbox.setY(spawnLocation.y);
-        }
-    }
-
-    public Vector2 getPlayerStart() {
-        MapLayer objectLayer = tiledMap.getLayers().get("objects");
-        
-        if (objectLayer != null) {
-            for (MapObject object : objectLayer.getObjects()) {
-                if (object instanceof RectangleMapObject) {
-                    if ("Start".equals(object.getName())) {
-                        Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                        return new Vector2(rect.x, rect.y);
-                    }
-                }
-            }
-        }
-        return new Vector2(100, 300);
-    }
-
 }

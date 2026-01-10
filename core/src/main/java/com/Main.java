@@ -3,8 +3,9 @@ package com;
 // === Importations ===
 // LibGDX
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 // Engine
-import com.controller.Manager;
+import com.controller.GameEngine;
 import com.view.screens.GameScreen;
 // Java
 // ====================
@@ -20,14 +21,21 @@ import com.view.screens.GameScreen;
  * Cette classe initialise le {@code Manager} et l'écran principale {@code GameScreen}
  */
 public class Main extends Game {
-    private Manager manager;
+    private GameEngine gameEngine;
 
     // Méthodes
     @Override
     public void create() {
         System.out.println("\n> === Game Engine === <");
-        this.manager = new Manager();
-        this.setScreen(new GameScreen(this.manager.getGameWorld()));
+        this.gameEngine = new GameEngine();
+        this.setScreen(new GameScreen(this.gameEngine.getGameWorld()));
+    }
+
+    @Override
+    public void render() {
+        float dt = Gdx.graphics.getDeltaTime();
+        this.gameEngine.update(dt);
+        this.gameEngine.render(dt);
     }
 
     @Override

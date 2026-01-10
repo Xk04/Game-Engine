@@ -42,7 +42,7 @@ public abstract class Level {
     public GameWorld setUpGameWorld() {
         MapLoader map = new MapLoader(); 
         map.loadMap(this.mapPath);
-        GameWorld world = new GameWorld(map.getCurrentMap(), null);
+        GameWorld world = new GameWorld(map, "", null);
         return world;
     }
     

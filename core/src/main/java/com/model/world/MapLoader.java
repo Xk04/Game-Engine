@@ -55,6 +55,48 @@ public class MapLoader {
         return this.currentMapPath;
     }
 
+        /**
+     * Récupère la position de départ du joueur définie dans Tiled.
+     * Cherche un objet nommé "Start" dans le calque "objects".
+     * @return Vector2 (x, y)
+     */
+    public Vector2 getPlayerStart() {
+        MapLayer layer = currentMap.getLayers().get("objects");
+
+        if (layer == null) {
+            System.err.println("ATTENTION : Le calque 'objects' n'existe pas dans la map. Spawn par défaut (100, 300).");
+            return new Vector2(100, 300);
+        }
+
+        for (MapObject object : layer.getObjects()) {
+            if (object.getName() != null && object.getName().equalsIgnoreCase("Start")) {
+                if (object instanceof RectangleMapObject) {
+                    Rectangle rect = ((RectangleMapObject) object).getRectangle();
+                    System.out.println("> Spawn trouvé en : " + rect.x + ", " + rect.y);
+                    return new Vector2(rect.x, rect.y);
+                }
+            }
+        }
+
+        System.err.println("ATTENTION : Aucun objet nommé 'Start' trouvé. Spawn par défaut (100, 300).");
+        return new Vector2(100, 300);
+    }
+
+    public Rectangle getEndZone() {
+        MapLayer layer = currentMap.getLayers().get("objects");
+        if (layer == null) return null;
+
+        for (MapObject object : layer.getObjects()) {
+            if (object instanceof RectangleMapObject) {
+                // On cherche l'objet qui s'appelle "End"
+                if ("End".equals(object.getName())) {
+                    return ((RectangleMapObject) object).getRectangle();
+                }
+            }
+        }
+        return null; // Pas de fin trouvée
+    }
+
     // SETTERS
     private void setCurrentMap(String newMapPath) {
         try {
@@ -144,49 +186,4 @@ public class MapLoader {
         }
         return collisions;
     }
-
-    /**
-     * Récupère la position de départ du joueur définie dans Tiled.
-     * Cherche un objet nommé "Start" dans le calque "objects".
-     * @return Vector2 (x, y)
-     */
-    public Vector2 getPlayerStart() {
-        MapLayer layer = currentMap.getLayers().get("objects");
-
-        if (layer == null) {
-            System.err.println("ATTENTION : Le calque 'objects' n'existe pas dans la map. Spawn par défaut (100, 300).");
-            return new Vector2(100, 300);
-        }
-
-        for (MapObject object : layer.getObjects()) {
-            if (object.getName() != null && object.getName().equalsIgnoreCase("Start")) {
-                if (object instanceof RectangleMapObject) {
-                    Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                    System.out.println("> Spawn trouvé en : " + rect.x + ", " + rect.y);
-                    return new Vector2(rect.x, rect.y);
-                }
-            }
-        }
-
-        System.err.println("ATTENTION : Aucun objet nommé 'Start' trouvé. Spawn par défaut (100, 300).");
-        return new Vector2(100, 300);
-    }
-
-    public Rectangle getEndZone() {
-        MapLayer layer = currentMap.getLayers().get("objects");
-        if (layer == null) return null;
-
-        for (MapObject object : layer.getObjects()) {
-            if (object instanceof RectangleMapObject) {
-                // On cherche l'objet qui s'appelle "End"
-                if ("End".equals(object.getName())) {
-                    return ((RectangleMapObject) object).getRectangle();
-                }
-            }
-        }
-        return null; // Pas de fin trouvée
-    }
-
 }
-
-

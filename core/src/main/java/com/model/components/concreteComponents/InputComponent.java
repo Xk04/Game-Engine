@@ -43,6 +43,7 @@ public class InputComponent extends Component {
     public boolean isSpace() {
         return space;
     }
+
     // SETTERS
     public void setUp(boolean state) {
         this.up = state;
@@ -63,9 +64,7 @@ public class InputComponent extends Component {
     public void setSpace(boolean space) {
         this.space = space;
     }
+
     // Méthodes
-
-
-
     
 }

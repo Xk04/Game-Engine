@@ -62,5 +62,4 @@ public class HitboxComponent extends Component {
     }
 
     // Méthodes
-
 }

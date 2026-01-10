@@ -14,6 +14,8 @@ import com.model.components.concreteComponents.*;
 import java.util.Map;
 // ====================
 
+
+
 public class EntityRenderer {
 
     private SpriteBatch batch;
@@ -24,14 +26,8 @@ public class EntityRenderer {
     }
 
     // GETTERS
-    public SpriteBatch getBatch() {
-        return batch;
-    }
 
     // SETTERS
-    public void setBatch(SpriteBatch batch) {
-        this.batch = batch;
-    }
 
     // Méthodes
     public void render(GameWorld world, CameraManager camera) {
@@ -43,8 +39,8 @@ public class EntityRenderer {
 
             PositionComponent pos = entity.getComponent(PositionComponent.class);
             SpriteComponent sprite = entity.getComponent(SpriteComponent.class);
-            StateComponent state = entity.getComponent(StateComponent.class);
-            this.drawSprite(sprite, pos, state);
+
+            this.drawSprite(sprite, pos);
         }
         batch.end();
     }
@@ -53,21 +49,11 @@ public class EntityRenderer {
         batch.dispose();
     }
 
-    public void drawSprite(SpriteComponent sprite, PositionComponent pos, StateComponent state) {
+
+    public void drawSprite(SpriteComponent sprite, PositionComponent pos) {
         if (pos != null && sprite != null) {
             Texture texture = TextureManager.get(sprite.getTexturePath());
-            boolean flipX = false;
-            if (state != null) {
-                flipX = !state.isDirection();
-            }
-            batch.draw(texture,
-                    pos.getX(), pos.getY(), 
-                    texture.getWidth(), texture.getHeight(),
-                    0, 0,
-                    texture.getWidth(), texture.getHeight(),
-                    flipX, false
-            );
+            batch.draw(texture, pos.getX(), pos.getY());
         }
     }
-
 }
