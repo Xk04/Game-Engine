@@ -127,7 +127,7 @@ public class GameWorld {
                 HitboxComponent hitbox = player.getComponent(HitboxComponent.class);
                 
                 if (hitbox != null && hitbox.getBounds().overlaps(endZone)) {
-                    //System.out.println("Niveau terminé ! Bravo Santa !");
+                    System.out.println("Niveau terminé ! Bravo Santa !");
                 }
             }
         }
