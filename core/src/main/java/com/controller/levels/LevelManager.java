@@ -22,7 +22,7 @@ public class LevelManager {
     // Constructeurs
     public LevelManager() {
         this.levels = new LinkedList<>();
-        this.levels.add(new StartingPoint("maps/level0.tmx"));
+        this.levels.add(new StartingPoint("maps/level1.tmx"));
         this.setLevelsIterator();
         System.out.println("  | LevelManager: ok");
     }

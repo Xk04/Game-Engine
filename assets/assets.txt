@@ -3,6 +3,7 @@ maps/level0
 maps/level0.tmx
 maps/level1.tmx
 maps/level2.tmx
+maps/level3.tmx
 textures/city.png
 textures/decor/BG/BG.png
 textures/decor/Object/Crate.png
