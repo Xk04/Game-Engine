@@ -68,8 +68,7 @@ public class PlayerPhysicsComponent extends Component {
 
         if (position == null || velocity == null || hitbox == null || state == null) return;
 
-        // 1. GESTION DES INPUTS (Contrôles)
-        velocity.setVX(0); // On remet la vitesse X à 0 à chaque frame (sinon il glisse à l'infini)
+        velocity.setVX(0);
         
         if (input != null) {
             if (input.isLeft()) {
