@@ -38,6 +38,13 @@ public class GameWorld {
         System.out.println(this.toString());
     }
 
+    //Constructeur pour lestests
+    public GameWorld(TiledMap tiledMap, HashMap<String, Entity> entities) {
+        this.tiledMap = tiledMap;
+        this.entities = (entities != null) ? entities : new HashMap<>();
+        this.mapLoader = null; // Pas de loader en mode test
+    }
+
     // GETTERS
     public MapLoader getMapLoader() {
         return mapLoader;
@@ -52,6 +59,9 @@ public class GameWorld {
     }
 
     public int getMapWidth() {
+        if (this.tiledMap == null) {
+            return 0;
+        }
         MapProperties properties = this.tiledMap.getProperties();
         int width = properties.get("width", Integer.class);
         int tileWidth = properties.get("tilewidth", Integer.class);
@@ -59,6 +69,9 @@ public class GameWorld {
     }
 
     public int getMapHeight() {
+        if (this.tiledMap == null) {
+            return 0;
+        }
         MapProperties properties = this.tiledMap.getProperties();
         int height = properties.get("height", Integer.class);
         int tileHeight = properties.get("tileheight", Integer.class);

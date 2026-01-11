@@ -68,14 +68,12 @@ public class StartingPoint extends Level {
         this.entities = new HashMap<>();
         this.map = new MapLoader(); 
         this.playerFactory = new PlayerFactory();
-
-        this.map.loadMap(this.getMapPath());
         
-        this.world = new GameWorld(this.map, this.getMapPath(), this.entities);
+        this.world = new GameWorld(this.map, this.getMapPath(), null);
 
         Vector2 spawnPoint = this.world.getMapLoader().getPlayerStart();
-
         this.entities.put("player1", this.playerFactory.create(spawnPoint.x, spawnPoint.y));
+
         this.world.setEntities(this.entities);
 
         return world;

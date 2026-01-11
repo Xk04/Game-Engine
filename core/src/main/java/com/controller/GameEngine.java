@@ -38,8 +38,7 @@ public class GameEngine {
     }
 
     /**
-     * Constructeur dédié aux Tests Unitaires (Injection de dépendances).
-     * Permet de créer un moteur avec des faux objets pour éviter de charger les graphismes.
+     * Constructeur qui sert qu'aux tests unitaires
      */
     public GameEngine(LevelManager levelManager, GameWorld gameWorld, InputManager inputManager, GameScreen gameScreen) {
         this.levelManager = levelManager;

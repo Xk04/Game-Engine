@@ -7,9 +7,9 @@ dependencies {
   if(enableGraalNative == 'true') {
     implementation "io.github.berstanio:gdx-svmhelper-annotations:$graalHelperVersion"
   }
-  // JUnit 4 (Test unitaires)
+  // JUnit 4
     testImplementation files('libs/junit-4.13.2.jar')
     
-    // Hamcrest (Pour les "assertThat", "is", etc.)
+    // Hamcrest
     testImplementation files('libs/hamcrest-core-1.3.jar')
 }

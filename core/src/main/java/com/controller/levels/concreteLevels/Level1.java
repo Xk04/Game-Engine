@@ -68,7 +68,6 @@ public class Level1 extends Level {
         this.entities = new HashMap<>();
         this.map = new MapLoader(); 
         this.playerFactory = new PlayerFactory();
-        this.map.loadMap(this.getMapPath());
         Vector2 spawnPoint = map.getPlayerStart();
 
         this.entities.put("player1", this.playerFactory.create(spawnPoint.x, spawnPoint.y));

@@ -42,6 +42,12 @@ public class MapLoader {
         this.currentMap = map;
     }
 
+    //Constructeur pour les tests 
+    public MapLoader(TiledMap map, TmxMapLoader injectedLoader) {
+        this.currentMap = map;
+        this.mapLoader = injectedLoader;
+    }
+
     // GETTERS
     public TmxMapLoader getmapLoader() {
         return this.mapLoader;
