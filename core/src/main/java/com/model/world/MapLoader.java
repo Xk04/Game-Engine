@@ -1,5 +1,6 @@
 package com.model.world;
 
+
 // === Importations ===
 // LibGDX
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -28,29 +29,24 @@ import java.util.List;
  * la map demandée avec currentMapPath.
  */
 public class MapLoader {
-    private TmxMapLoader mapLoader;
+
+    private TmxMapLoader tmxLoader;
     private TiledMap currentMap;
     private String currentMapPath;
+    private String lastLoggedMapForSol = "";
+    private String lastLoggedMapForObjects = "";
+
 
     // Constructeurs
-    public MapLoader() {
-        this.mapLoader = new TmxMapLoader();
+    public MapLoader(String newMapPath) {
+        this.tmxLoader = new TmxMapLoader();
+        this.loadMap(newMapPath);
     }
 
-    public MapLoader(TiledMap map) {
-        this.mapLoader = new TmxMapLoader();
-        this.currentMap = map;
-    }
-
-    //Constructeur pour les tests 
-    public MapLoader(TiledMap map, TmxMapLoader injectedLoader) {
-        this.currentMap = map;
-        this.mapLoader = injectedLoader;
-    }
 
     // GETTERS
     public TmxMapLoader getmapLoader() {
-        return this.mapLoader;
+        return this.tmxLoader;
     }
 
     public TiledMap getCurrentMap() {
@@ -61,16 +57,20 @@ public class MapLoader {
         return this.currentMapPath;
     }
 
-        /**
-     * Récupère la position de départ du joueur définie dans Tiled.
-     * Cherche un objet nommé "Start" dans le calque "objects".
-     * @return Vector2 (x, y)
-     */
+    /**
+      * Récupère la position de départ du joueur définie dans Tiled.
+      * Cherche un objet nommé "Start" dans le calque "objects".
+      * @return Vector2 (x, y)
+      */
     public Vector2 getPlayerStart() {
         MapLayer layer = currentMap.getLayers().get("objects");
 
         if (layer == null) {
-            System.err.println("ATTENTION : Le calque 'objects' n'existe pas dans la map. Spawn par défaut (100, 300).");
+            // Éviter les logs répétés pour la même map
+            if (!currentMapPath.equals(lastLoggedMapForObjects)) {
+                System.err.println("WARNING : Le calque 'objects' n'existe pas dans la map. Spawn par défaut (100, 300).");
+                lastLoggedMapForObjects = currentMapPath;
+            }
             return new Vector2(100, 300);
         }
 
@@ -78,35 +78,40 @@ public class MapLoader {
             if (object.getName() != null && object.getName().equalsIgnoreCase("Start")) {
                 if (object instanceof RectangleMapObject) {
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                    System.out.println("> Spawn trouvé en : " + rect.x + ", " + rect.y);
                     return new Vector2(rect.x, rect.y);
                 }
             }
         }
+        System.err.println("WARNING : Aucun objet nommé 'Start' trouvé. Spawn par défaut (100, 300).");
 
-        System.err.println("ATTENTION : Aucun objet nommé 'Start' trouvé. Spawn par défaut (100, 300).");
         return new Vector2(100, 300);
     }
 
+    /**
+      * Récupère le checkpoint de fin de niveau dans Tiled.
+      * Cherche un objet nommé "End" dans le calque "objects".
+      * @return RectangleMapObject
+      */
     public Rectangle getEndZone() {
         MapLayer layer = currentMap.getLayers().get("objects");
+
         if (layer == null) return null;
 
         for (MapObject object : layer.getObjects()) {
             if (object instanceof RectangleMapObject) {
-                // On cherche l'objet qui s'appelle "End"
                 if ("End".equals(object.getName())) {
                     return ((RectangleMapObject) object).getRectangle();
                 }
             }
         }
-        return null; // Pas de fin trouvée
+        return null;
     }
+
 
     // SETTERS
     private void setCurrentMap(String newMapPath) {
         try {
-            this.currentMap = mapLoader.load(newMapPath);
+            this.currentMap = tmxLoader.load(newMapPath);
         } catch (Exception err) {
             throw new IllegalAccessError("\n> Impossible de charger la map:\n" + "  | Détails de l'erreur: " + err);
         }
@@ -120,12 +125,11 @@ public class MapLoader {
         }
     }
 
+
     // Méthodes
     public TiledMap loadMap(String newMapPath) {
-        System.out.print("> Chargement de la carte : ");
         this.setCurrentMapPath(newMapPath);
         this.setCurrentMap(this.getCurrentMapPath());
-        System.out.println(this.getCurrentMapPath());
         return this.currentMap;
     }
 
@@ -135,7 +139,11 @@ public class MapLoader {
         TiledMapTileLayer layer = (TiledMapTileLayer) currentMap.getLayers().get("Sol");
 
         if (layer == null) {
-            System.err.println("ERREUR : Le calque 'Sol' est introuvable dans la map !");
+            // Éviter les logs répétés pour la même map
+            if (!currentMapPath.equals(lastLoggedMapForSol)) {
+                System.err.println("ERREUR : Le calque 'Sol' est introuvable dans la map !");
+                lastLoggedMapForSol = currentMapPath;
+            }
             return collisions;
         }
 

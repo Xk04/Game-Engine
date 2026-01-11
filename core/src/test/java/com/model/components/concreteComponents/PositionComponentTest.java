@@ -21,14 +21,11 @@ public class PositionComponentTest {
 
         assertThat(pos.getX(), is(x));
         assertThat(pos.getY(), is(y));
-        
-        assertThat(pos.getPos()[0], is(x));
-        assertThat(pos.getPos()[1], is(y));
     }
 
     @Test
     public void testSettersIndividuels() {
-        PositionComponent pos = new PositionComponent(0, 0);
+        PositionComponent pos = new PositionComponent(0f, 0f);
 
         pos.setX(10f);
         pos.setY(20f);
@@ -38,13 +35,10 @@ public class PositionComponentTest {
     }
 
     @Test
-    public void testSetPos() {
-        PositionComponent pos = new PositionComponent(0, 0);
+    public void testCoordonneesNegatives() {
+        PositionComponent pos = new PositionComponent(-50f, -10.5f);
 
-        pos.setPos(5f, 5f);
-
-        float[] tableau = pos.getPos();
-        assertThat(tableau[0], is(5f));
-        assertThat(tableau[1], is(5f));
+        assertThat(pos.getX(), is(-50f));
+        assertThat(pos.getY(), is(-10.5f));
     }
 }

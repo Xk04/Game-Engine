@@ -4,7 +4,6 @@ package com.model.components.concreteComponents;
 // LibGDX
 
 // Engine
-import com.model.components.concreteComponents.HealthComponent;
 
 // JUnit & Hamcrest
 import org.junit.Test;

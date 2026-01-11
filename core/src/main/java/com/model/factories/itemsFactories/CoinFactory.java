@@ -13,7 +13,7 @@ import com.model.factories.EntityFactory;
 public class CoinFactory extends EntityFactory {
 
     public Entity create(float x, float y) {
-        Entity platform = null;
-        return platform;
+        Entity coin = null;
+        return coin;
     }
 }

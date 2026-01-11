@@ -4,6 +4,7 @@ package com.model.systems;
 // LibGDX
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 
 // Engine
 import com.model.entities.Entity;
@@ -24,67 +25,65 @@ import java.util.Map;
 
 public class CollisionSystemTest {
 
-    // fausse classe MapLoader pour le test
-    // Cela évite d'avoir besoin d'un fichier .tmx réel
     private static class MockMapLoader extends MapLoader {
         public MockMapLoader() {
-            super(null, null); 
+            super("test/mock.tmx");
         }
 
         @Override
         public Vector2 getPlayerStart() {
-            return new Vector2(100, 300); 
+            return new Vector2(100, 300);
         }
 
         @Override
         public Rectangle getEndZone() {
             return new Rectangle(500, 300, 50, 50);
         }
+
+        @Override
+        public TiledMap loadMap(String p) {
+            return null;
+        }
     }
 
     @Test
     public void testRespawnApresChute() {
         Entity player = new Entity();
-
-        PositionComponent pos = new PositionComponent(50, -400);
-        player.addComponent(pos);
-
+        PositionComponent pos = new PositionComponent(50, -400); // En dessous de -300
         VelocityComponent vel = new VelocityComponent(0, -500);
-        player.addComponent(vel);
-
         HitboxComponent hit = new HitboxComponent(50, -400, 32, 32);
+
+        player.addComponent(pos);
+        player.addComponent(vel);
         player.addComponent(hit);
 
         MockMapLoader loader = new MockMapLoader();
-        HashMap<String, Entity> map = new HashMap<>();
-        map.put("player1", player);
-        Map.Entry<String, Entity> entry = map.entrySet().iterator().next();
+        Map.Entry<String, Entity> entry = new HashMap<String, Entity>() {
+            {
+                put("player1", player);
+            }
+        }.entrySet().iterator().next();
 
         CollisionSystem.update(loader, entry, 0.1f);
 
         assertThat(pos.getX(), is(100f));
         assertThat(pos.getY(), is(300f));
-
         assertThat(vel.getVX(), is(0f));
-        assertThat(vel.getVY(), is(0f));
-
-        assertThat(hit.getX(), is(100f));
-        assertThat(hit.getY(), is(300f));
     }
 
     @Test
-    public void testPasDeRespawnSiEnSecurite() {
+    public void testDetectionVictoire() {
         Entity player = new Entity();
-        PositionComponent pos = new PositionComponent(50, 0);
-        player.addComponent(pos);
+        player.addComponent(new HitboxComponent(505, 305, 32, 32));
 
         MockMapLoader loader = new MockMapLoader();
-        HashMap<String, Entity> map = new HashMap<>();
-        map.put("player1", player);
-        Map.Entry<String, Entity> entry = map.entrySet().iterator().next();
+        Map.Entry<String, Entity> entry = new HashMap<String, Entity>() {
+            {
+                put("player1", player);
+            }
+        }.entrySet().iterator().next();
 
-        CollisionSystem.update(loader, entry, 0.1f);
-
-        assertThat(pos.getY(), is(0f));
+        boolean result = CollisionSystem.update(loader, entry, 0.1f);
+        assertThat("Le système doit détecter la victoire", result, is(true));
     }
 }

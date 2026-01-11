@@ -1,12 +1,13 @@
 package com.controller;
 
+
 // === Importations ===
 // LibGDX
 // Engine
 import com.model.world.GameWorld;
-import com.view.screens.GameScreen;
-import com.controller.inputs.InputManager;
-import com.controller.levels.LevelManager;
+import com.badlogic.gdx.Gdx;
+import com.controller.managers.InputManager;
+import com.controller.managers.LevelManager;
 import com.model.entities.Entity;
 // Java
 // ====================
@@ -14,38 +15,31 @@ import com.model.entities.Entity;
 
 
 /**
- * Point d'accès central aux sous-systèmes du moteur (niveaux, caméra, world).
- * <p>
- * Cette classe construit et expose les managers/contrôleurs nécessaires
- * au fonctionnement du jeu.
- */
+  * Point d'accès central aux sous-systèmes du moteur (niveaux, caméra, world).
+  * <p>
+  * Cette classe construit et expose les managers/contrôleurs nécessaires
+  * au fonctionnement du jeu.
+  */
 public class GameEngine {
+
     private GameWorld gameWorld;
     private LevelManager levelManager;
     private InputManager inputManager;
-    private GameScreen gameScreen;
+
 
     // Constructeurs
     public GameEngine() {
-        System.out.println("> Importation du Moteur: ok");
-        System.out.println("> Importations des Controllers:");
+        System.out.println("⭢ Importation du moteur");
 
         this.levelManager = new LevelManager();
-        this.gameWorld = this.levelManager.loadCurrentLevel();
+        
+        this.gameWorld = this.levelManager.getCurrentLevel().getWorld();
         Entity player = this.gameWorld.getEntities().get("player1");
+
         this.inputManager = new InputManager(player);
-        this.gameScreen = new GameScreen(gameWorld);
+        Gdx.input.setInputProcessor(inputManager);
     }
 
-    /**
-     * Constructeur qui sert qu'aux tests unitaires
-     */
-    public GameEngine(LevelManager levelManager, GameWorld gameWorld, InputManager inputManager, GameScreen gameScreen) {
-        this.levelManager = levelManager;
-        this.gameWorld = gameWorld;
-        this.inputManager = inputManager;
-        this.gameScreen = gameScreen;
-    }
 
     // GETTERS
     public GameWorld getGameWorld() {
@@ -74,14 +68,28 @@ public class GameEngine {
         this.inputManager = inputController;
     }
 
+
     // Méthodes
     public void update(float dt) {
-        //this.inputManager.update(this.gameWorld, dt);
-        this.gameWorld.update(dt);
+        this.inputManager.update(this.gameWorld, dt);
+        boolean levelCompleted = this.gameWorld.update(dt);
+        if (levelCompleted) {
+            System.out.println("Niveau terminé ! Chargement du niveau suivant...");
+            GameWorld nextWorld = this.levelManager.loadNextLevel();
+            if (nextWorld != null) {
+                System.out.println("Nouveau niveau chargé.");
+                this.setGameWorld(nextWorld);
+                Entity player = this.gameWorld.getEntities().get("player1");
+                if (player != null) {
+                    this.inputManager = new InputManager(player);
+                    Gdx.input.setInputProcessor(inputManager);
+                    System.out.println("InputManager réinitialisé.");
+                } else {
+                    System.out.println("Erreur : Joueur non trouvé dans le nouveau niveau !");
+                }
+            } else {
+                System.out.println("> Fin du jeu");
+            }
+        }
     }
-
-    public void render(float dt) {
-        this.gameScreen.render(dt);
-    }
-
 }

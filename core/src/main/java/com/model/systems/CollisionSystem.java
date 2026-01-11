@@ -14,13 +14,11 @@ import com.model.entities.Entity;
 import java.util.Map;
 // ====================
 
+public class CollisionSystem implements UpdateInterface {
 
-
-public class CollisionSystem {
     private static void checkPlayerFall(Entity player, Vector2 spawnLocation) {
         if (player != null) {
             PositionComponent pos = player.getComponent(PositionComponent.class);
-            
             if (pos != null && pos.getY() < -300) {
                 respawnPlayer(player, spawnLocation);
             }
@@ -28,10 +26,10 @@ public class CollisionSystem {
     }
 
     private static void respawnPlayer(Entity player, Vector2 spawnLocation) {
-        if (spawnLocation == null) return;
-
+        if (spawnLocation == null)
+            return;
+        
         System.out.println("MORT ! Respawn en " + spawnLocation);
-
         PositionComponent pos = player.getComponent(PositionComponent.class);
         VelocityComponent vel = player.getComponent(VelocityComponent.class);
         HitboxComponent hitbox = player.getComponent(HitboxComponent.class);
@@ -52,21 +50,22 @@ public class CollisionSystem {
         }
     }
 
-    public static void update(MapLoader mapLoader, Map.Entry<String, Entity> entitySet, float deltaTime) {
+    public static boolean update(MapLoader mapLoader, Map.Entry<String, Entity> entitySet, float deltaTime) {
         String key = entitySet.getKey();
         Entity entity = entitySet.getValue();
 
         Rectangle endZone = mapLoader.getEndZone();
         if (endZone != null) {
-            if (key == "player1") {
+            if ("player1".equals(key)) {
                 HitboxComponent hitbox = entity.getComponent(HitboxComponent.class);
-                
                 if (hitbox != null && hitbox.getBounds().overlaps(endZone)) {
-                    System.out.println("Niveau terminé ! Bravo Santa !");
+                    System.out.println("Collision avec EndZone détectée !");
+                    // Passage au niveau suivant
+                    return true;
                 }
-                checkPlayerFall(entity, mapLoader.getPlayerStart());
             }
         }
-        
+        checkPlayerFall(entity, mapLoader.getPlayerStart());
+        return false;
     }
 }

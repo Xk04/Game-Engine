@@ -11,7 +11,9 @@ import com.model.components.concreteComponents.*;
 // ====================
 
 
-/** Factory simple pour créer un joueur. */
+/** Factory simple pour créer un joueur. 
+  * 
+  */
 public class PlayerFactory extends EntityFactory {
 
     // Constructeurs
@@ -34,6 +36,7 @@ public class PlayerFactory extends EntityFactory {
         player.addComponent(new StateComponent());
         player.addComponent(new PhysicsComponent());
         AnimationComponent anims = new AnimationComponent();
+
         // Chargement des fichiers d'animation
         anims.addAnimation(StateComponent.IDLE, "textures/player/santa_idle", 16, 0.1f);
         anims.addAnimation(StateComponent.RUN, "textures/player/santa_run", 11, 0.05f);

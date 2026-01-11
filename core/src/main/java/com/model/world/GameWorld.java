@@ -1,7 +1,9 @@
 package com.model.world;
-import com.badlogic.gdx.maps.MapProperties;
+
+
 // === Importations ===
 // LibGDX
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 // Engine
@@ -20,36 +22,25 @@ import java.util.HashMap;
  * Cette classe est composé de méthodes utiles aux mise à jours des entités + map.
  */
 public class GameWorld { 
+
     private TiledMap tiledMap;
     private HashMap<String, Entity> entities;
     private MapLoader mapLoader;
-
-
     private Vector2 spawnLocation;
 
+
     // Constructeurs
-    public GameWorld(MapLoader map, String mapPath, HashMap<String, Entity> newEntities) {
+    public GameWorld(MapLoader newMapLoader, String mapPath, HashMap<String, Entity> newEntities) {
+        this.entities = new HashMap<String, Entity>();
         this.setEntities(newEntities);
-        this.mapLoader = map;
-        this.mapLoader.loadMap(mapPath);
-        this.tiledMap = this.mapLoader.getCurrentMap();
-        this.spawnLocation = mapLoader.getPlayerStart();
-        System.out.println("> Spawn sauvegardé en : " + spawnLocation);
+        this.setMapLoader(newMapLoader);
+        this.setTiledMap(this.mapLoader.getCurrentMap());
+        this.setSpawnLocation(this.mapLoader.getPlayerStart());
         System.out.println(this.toString());
     }
 
-    //Constructeur pour lestests
-    public GameWorld(TiledMap tiledMap, HashMap<String, Entity> entities) {
-        this.tiledMap = tiledMap;
-        this.entities = (entities != null) ? entities : new HashMap<>();
-        this.mapLoader = null; // Pas de loader en mode test
-    }
 
     // GETTERS
-    public MapLoader getMapLoader() {
-        return mapLoader;
-    }
-
     public TiledMap getTiledMap() {
         return this.tiledMap;
     }
@@ -58,10 +49,15 @@ public class GameWorld {
         return this.entities;
     }
 
+    public MapLoader getMapLoader() {
+        return this.mapLoader;
+    }
+
+    public Vector2 getSpawnLocation() {
+        return this.spawnLocation;
+    }
+
     public int getMapWidth() {
-        if (this.tiledMap == null) {
-            return 0;
-        }
         MapProperties properties = this.tiledMap.getProperties();
         int width = properties.get("width", Integer.class);
         int tileWidth = properties.get("tilewidth", Integer.class);
@@ -69,14 +65,12 @@ public class GameWorld {
     }
 
     public int getMapHeight() {
-        if (this.tiledMap == null) {
-            return 0;
-        }
         MapProperties properties = this.tiledMap.getProperties();
         int height = properties.get("height", Integer.class);
         int tileHeight = properties.get("tileheight", Integer.class);
         return height*tileHeight;
     }
+
 
     // SETTERS
     public void setTiledMap(TiledMap tiledMap) {
@@ -88,7 +82,7 @@ public class GameWorld {
     }
 
     public void setEntities(HashMap<String, Entity> entityMap) {
-        if (entities == null) {
+        if (entityMap == null) {
             this.entities = new HashMap<String, Entity>();
         } 
         if (entityMap != null) {
@@ -98,16 +92,24 @@ public class GameWorld {
         }
     }
 
+    public void setMapLoader(MapLoader mapLoader) {
+        this.mapLoader = mapLoader;
+    }
+
+    public void setSpawnLocation(Vector2 spawnLocation) {
+        this.spawnLocation = spawnLocation;
+    }
+
 
     // Méthodes
     @Override
     public String toString() {
-        String map = "\n  | Tiled map: " + this.getTiledMap() + ",";
-        String width = "\n  | Width: "+ this.getMapWidth() + " px,";
+        String map =    "\n  | Tiled map: " + this.getTiledMap() + ",";
+        String width =  "\n  | Width: "+ this.getMapWidth() + " px,";
         String height = "\n  | Height: " + this.getMapHeight() + " px,";
-        String player = "\n  | Player: "   + ",";
-        String entityList = "\n  | Entités: " + this.getEntities();
-        return "> Game World:" + map + width + height + player + entityList ;
+        String entityList = "\n  | Entities: " + this.getEntities();
+        String spawn =  "\n  | Spawn found at : " + this.spawnLocation;
+        return "⭢ Game World:" + map + width + height + entityList + spawn;
     }
 
     public void addEntity(String type, Entity entity) {
@@ -118,13 +120,14 @@ public class GameWorld {
         this.entities.remove(entityTag);
     }
 
-    public void update(float dt) {
-
+    public boolean update(float dt) {
         for (Map.Entry<String, Entity> entity : this.entities.entrySet()) {
             PhysicsSystem.update(this.mapLoader, entity, dt);
-            AnimationSystem.update(entity, dt);
-            CollisionSystem.update(this.mapLoader, entity, dt);
+            AnimationSystem.update(this.mapLoader, entity, dt);
+            if (CollisionSystem.update(this.mapLoader, entity, dt)) {
+                return true; // Niveau terminé
+            }
         }
-        
+        return false;
     }
 }

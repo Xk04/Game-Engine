@@ -1,14 +1,14 @@
 package com.model.entities;
 
+
 // === Importations ===
 // LibGDX
-
 // Engine
 import java.util.LinkedList;
 import com.model.components.Component;
-
 // Java
 // ====================
+
 
 
 /**
@@ -17,6 +17,7 @@ import com.model.components.Component;
  * Les entités doivent définir leur comportement dans {@link #update(float)}.
  */
 public class Entity {
+
     private LinkedList<Component> components;
 
     // Constructeurs
@@ -24,6 +25,7 @@ public class Entity {
     public Entity() {
         this.setComponents(null);
     }
+
 
     // GETTERS
     /** Retourne le composant associé ou null (dans le cas où il n'existe pas). */
@@ -35,6 +37,7 @@ public class Entity {
         }
         return null;
     }
+
 
     // SETTERS
     /** Remplace la liste des composants (copie des éléments). */
@@ -51,6 +54,6 @@ public class Entity {
         this.components.add(newComponent);
     }
 
-    // Méthodes
 
+    // Méthodes
 }

@@ -11,12 +11,28 @@ import com.view.camera.CameraManager;
 
 
 public class MapRenderer {
+
     private OrthogonalTiledMapRenderer renderer;
 
+    // Constructeurs
     public MapRenderer(TiledMap map) {
         this.renderer = new OrthogonalTiledMapRenderer(map);
     }
 
+
+    // GETTERS
+    public OrthogonalTiledMapRenderer getRenderer() {
+        return renderer;
+    }
+
+
+    // SETTERS
+    public void setRenderer(OrthogonalTiledMapRenderer renderer) {
+        this.renderer = renderer;
+    }
+
+
+    // Méthodes
     public void render(CameraManager camera) {
         camera.getCamera().update();
         this.renderer.setView(camera.getCamera());

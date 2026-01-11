@@ -1,4 +1,5 @@
-package com.view.screens;
+package com.view.screen;
+
 
 // === Importations ===
 // LibGDX
@@ -13,22 +14,38 @@ import com.model.components.concreteComponents.PositionComponent;
 // ====================
 
 
+
 public class GameScreen implements Screen {
 
-    private final GameWorld world;
-    private final WorldRenderer worldRenderer;
-    private final CameraManager cameraManager;
+    private GameWorld world;
+    private WorldRenderer worldRenderer;
+    private CameraManager cameraManager;
 
+    
+    // Constructeurs
     public GameScreen(GameWorld world) {
         this.world = world;
-
+        
         this.cameraManager = new CameraManager(
             800, 480,
             this.world.getMapWidth(),
             this.world.getMapHeight()
         );
-
+        System.out.println("⭢ GameScreen: ok");
         this.worldRenderer = new WorldRenderer(world, cameraManager);
+    }
+
+
+    // SETTERS
+    public void setWorld(GameWorld newWorld) {
+        if (this.world != newWorld) {
+            this.world = newWorld;
+            // Mettre à jour le renderer et la caméra avec le nouveau monde
+            this.worldRenderer = new WorldRenderer(newWorld, cameraManager);
+            // Réinitialiser la caméra si nécessaire
+            this.cameraManager.setMapWidth(newWorld.getMapWidth());
+            this.cameraManager.setMapHeight(newWorld.getMapHeight());
+        }
     }
 
     @Override
@@ -50,6 +67,32 @@ public class GameScreen implements Screen {
         this.cameraManager.update();
     }
 
+
+    // GETTERS
+    public GameWorld getWorld() {
+        return this.world;
+    }
+
+    public WorldRenderer getWorldRenderer() {
+        return this.worldRenderer;
+    }
+
+    public CameraManager getCameraManager() {
+        return this.cameraManager;
+    }
+
+
+    // SETTERS
+    public void setWorldRenderer(WorldRenderer neWworldRenderer){
+        this.worldRenderer = neWworldRenderer;
+    }
+
+    public void setCameraManager(CameraManager newCameraManager){
+        this.cameraManager = newCameraManager;
+    }
+
+
+    // Méthodes
     @Override
     public void resize(int width, int height) {
         this.cameraManager.resize(width, height);

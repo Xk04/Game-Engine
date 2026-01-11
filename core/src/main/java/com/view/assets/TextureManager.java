@@ -5,7 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TextureManager {
+
+    // Concstructeurs
+    // GETTERS
+    // SETTERS
     
+    // Méthodes
     private static final Map<String, Texture> textures = new HashMap<>();
 
     public static Texture get(String path) {

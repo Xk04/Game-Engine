@@ -1,80 +1,45 @@
 package com;
 
+
 // === Importations ===
 // LibGDX
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 // Engine
 import com.controller.GameEngine;
-import com.view.screens.GameScreen;
-// Java
+import com.view.screen.GameScreen;
 // ====================
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 
 /**
  * Point d'entrée du moteur de jeu.
  * <p>
- * Cette classe initialise le {@code Manager} et l'écran principale
- * {@code GameScreen}
+ * Cette classe initialise le {@code Manager} et l'écran principale {@code GameScreen}
  */
 public class Main extends Game {
+    
     private GameEngine gameEngine;
-
-    // Constructeurs (pour les tests)
-    public Main() {
-    }
-
-    public Main(GameEngine engine) {
-        this.gameEngine = engine;
-    }
-
-    // GETTER
-    public GameEngine getGameEngine() {
-        return gameEngine;
-    }
-
-    // SETTER
-    public void setGameEngine(GameEngine gameEngine) {
-        this.gameEngine = gameEngine;
-    }
 
     // Méthodes
     @Override
     public void create() {
-        System.out.println("\n> === Game Engine === <");
-
-        if (this.gameEngine == null) {
-            this.gameEngine = new GameEngine();
-        }
-
-        if (Gdx.graphics != null) {
-            this.setScreen(new GameScreen(this.gameEngine.getGameWorld()));
-        }
-
+        System.out.println("\n> ========== Game Engine ========== <");
+        this.gameEngine = new GameEngine();
+        this.setScreen(new GameScreen(this.gameEngine.getGameWorld()));
     }
 
     @Override
     public void render() {
-        if (Gdx.graphics == null) {
-            return;
-        }
-
         float dt = Gdx.graphics.getDeltaTime();
-        if (this.gameEngine != null) {
-            this.gameEngine.update(dt);
-            this.gameEngine.render(dt);
-        }
+        this.gameEngine.update(dt);
+        ((GameScreen) this.getScreen()).setWorld(this.gameEngine.getGameWorld());
+        super.render();
     }
 
     @Override
     public void dispose() {
-
-        if (this.getScreen() != null) {
-            this.getScreen().dispose();
-        }
+        this.getScreen().dispose();
         System.out.println("> Fenêtre fermée");
-        System.out.println("> =================== <");
+        System.out.println("> =================================== <");
     }
-
 }

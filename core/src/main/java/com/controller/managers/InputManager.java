@@ -1,4 +1,4 @@
-package com.controller.inputs;
+package com.controller.managers;
 
 // === Importations ===
 // LibGDX
@@ -10,27 +10,34 @@ import com.model.world.GameWorld;
 import com.model.components.concreteComponents.InputComponent;
 // Java
 // ====================
-import com.model.components.concreteComponents.VelocityComponent;
+
+
 
 public class InputManager extends InputAdapter {
 
     private InputComponent inputComponent;
 
+
     // Constructeur
     public InputManager(Entity player) {
         this.inputComponent = player.getComponent(InputComponent.class);
+        System.out.println("⭢ InputManager: ok");
     }
+
 
     // GETTERS
     public InputComponent getInputComponent() {
         return inputComponent;
     }
 
-    // GETTERS
+
+    // SETTERS
     public void setInputComponent(InputComponent inputComponent) {
         this.inputComponent = inputComponent;
     }
 
+
+    // Méthodes
     @Override
     public boolean keyDown(int keycode) {
         if (inputComponent == null)
@@ -79,5 +86,17 @@ public class InputManager extends InputAdapter {
                 break;
         }
         return true;
-    }   
+    }
+
+    public void update(GameWorld world, float dt) {
+        /*
+        if (inputComponent == null) return;
+
+        Entity player = world.getEntities().get("player1");
+        if (player == null) return;
+
+        VelocityComponent velocity = player.getComponent(VelocityComponent.class);
+        if (velocity == null) return;
+        */
+    }
 }

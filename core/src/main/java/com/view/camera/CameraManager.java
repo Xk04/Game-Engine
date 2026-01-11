@@ -21,13 +21,67 @@ public class CameraManager {
     private float targetX;
     private float targetY;
 
+
+    // Constructeurs
     public CameraManager(float worldWidth, float worldHeight, float mapWidth, float mapHeight) {
         this.camera = new OrthographicCamera();
         this.viewport = new ExtendViewport(worldWidth, worldHeight, camera);
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
+        System.out.println("⭢ CameraManager: ok");
     }
 
+
+    // GETTERS
+    public OrthographicCamera getCamera() { 
+        return camera; 
+    }
+
+    public Viewport getViewport() { 
+        return viewport; 
+    }
+
+    public float getMapWidth() {
+        return this.mapWidth;
+    }
+
+    public float getMapHeight() {
+        return this.mapHeight;
+    }
+
+    public float getTargetX() {
+        return this.targetX;
+    }
+
+    public float getTargetY() {
+        return this.targetY;
+    }
+    
+
+    // SETTERS
+    public void setTarget(float x, float y) { 
+        this.targetX = x; 
+        this.targetY = y; 
+    }
+
+    public void setMapWidth(float mapWidth) {
+        this.mapWidth = mapWidth;
+    }
+
+    public void setMapHeight(float mapHeight) {
+        this.mapHeight = mapHeight;
+    }
+
+    public void setTargetX(float targetX) {
+        this.targetX = targetX;
+    }
+
+    public void setTargetY(float targetY) {
+        this.targetY = targetY;
+    }
+
+    
+    // Méthodes
     public void update() {
         camera.position.set(targetX, targetY, 0);
         clamp();
@@ -65,20 +119,4 @@ public class CameraManager {
             camera.zoom = 1.0f; 
         }
     }
-
-    // GETTERS
-    public OrthographicCamera getCamera() { 
-        return camera; 
-    }
-
-    public Viewport getViewport() { 
-        return viewport; 
-    }
-
-    // SETTERS
-    public void setTarget(float x, float y) { 
-        this.targetX = x; 
-        this.targetY = y; 
-    }
-    
 }

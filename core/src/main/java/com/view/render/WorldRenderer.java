@@ -1,5 +1,6 @@
 package com.view.render;
 
+
 // === Importations ===
 // LibGDX
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,14 +19,13 @@ import com.view.camera.CameraManager;
  * et un {@link com.badlogic.gdx.graphics.g2d.SpriteBatch} pour dessiner.
  */
 public class WorldRenderer {
+
     private MapRenderer mapRenderer;
     private EntityRenderer entityRenderer;
-
     private GameWorld world;
     private CameraManager camera;
     private SpriteBatch batch;
-
-
+    
     // Constructeurs
     public WorldRenderer(GameWorld newWorld, CameraManager newCamera) {
         this.world = newWorld;
@@ -34,14 +34,55 @@ public class WorldRenderer {
 
         this.mapRenderer = new MapRenderer(this.world.getTiledMap());
         this.entityRenderer = new EntityRenderer();
-        System.out.println("> Importation du world renderer: ok");
+        System.out.println("⭢ WorldRenderer: ok");
 
     }
 
+
     // GETTERS
+    public MapRenderer getMapRenderer() {
+        return this.mapRenderer;
+    }
 
-    // SETTERS
+    public EntityRenderer getEntityRenderer() {
+        return this.entityRenderer;
+    }
 
+    public GameWorld getWorld() {
+        return this.world;
+    }
+
+    public CameraManager getCamera() {
+        return this.camera;
+    }
+
+    public SpriteBatch getBatch() {
+        return this.batch;
+    }
+
+
+    // SETTERS    
+    public void setMapRenderer(MapRenderer mapRenderer) {
+        this.mapRenderer = mapRenderer;
+    }
+
+    public void setEntityRenderer(EntityRenderer entityRenderer) {
+        this.entityRenderer = entityRenderer;
+    }
+
+    public void setWorld(GameWorld world) {
+        this.world = world;
+    }
+
+    public void setCamera(CameraManager camera) {
+        this.camera = camera;
+    }
+
+    public void setBatch(SpriteBatch batch) {
+        this.batch = batch;
+    }
+
+    
     // Méthodes
     /** Effectue le rendu de la carte et des entités. */
     public void render() {
