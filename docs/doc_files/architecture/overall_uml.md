@@ -15,6 +15,7 @@
 <br>
 <br>
 
+![MVC image](../../UMLs/Game%20Engine%20UML.png)
 
 > **Model**
 
@@ -39,8 +40,6 @@
 ![MVC image](../../UMLs/Main.png)
 <br>
 <br>
-
-![MVC image](../../UMLs/Game%20Engine%20UML.png)
 
 
 
