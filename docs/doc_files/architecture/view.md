@@ -2,6 +2,8 @@
 
 \> [Home](../../../README.md)
 
+\> Previous : [*Model*](./model.md)
+
 ### Architecture : *View*
 
 

@@ -2,9 +2,9 @@
 
 \> [Home](../../../README.md)
 
-\> Previous : [*Java Documentation*]()
+\> Previous : [*Features enabled*](./features.md)
 
-### Documentation : *Assets*
+### Presentation : *How to use the project ?*
 
 
 

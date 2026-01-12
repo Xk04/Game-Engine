@@ -12,8 +12,9 @@
 
 - [Presentation](docs/doc_files/presentation/presentation.md)
 - [Objectives for the game engine](docs/doc_files/presentation/objectives.md)
-- [Technologies used](docs/doc_files/documentation/technologies.md)
-- [How to scale the project ?](docs/doc_files/documentation/continue.md)
+- [Technologies used](docs/doc_files/presentation/technologies.md)
+- [Features enabled](docs/doc_files/presentation/features.md)
+- [How to use the project ?](docs/doc_files/presentation/continue.md)
 
 <br>
 
@@ -32,13 +33,13 @@
 > ### Documentation
 
 - [Java Documentation](core/build/docs/javadoc/overview-tree.html)
-- [Assets](docs/doc_files/documentation/assets.md)
+- [Resources](docs/doc_files/documentation/assets.md)
 
 <br>
 
 > ### Tests
 
-- [Tests Documentation]()
+- [Tests Documentation](docs/doc_files/test/test.md)
 
 <br>
 

@@ -2,20 +2,17 @@
 
 \> [Home](../../../README.md)
 
+\> Previous : [*Controller*](./controller.md)
+
 ### Architecture : *Overall UML*
 
 <br>
+<br>
 
-## Link of the overall UML: [here *](https://www.canva.com/design/DAG-Nd3q5AI/7-SBKxmsaA3JwQnLGgQG0w/edit?utm_content=DAG-Nd3q5AI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+#### Overall UML: [click here to see the interactive UML *](https://www.canva.com/design/DAG-Nd3q5AI/7-SBKxmsaA3JwQnLGgQG0w/edit?utm_content=DAG-Nd3q5AI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
-<iframe
-  id="inlineFrameExample"
-  title="Exemple de cadre intégré"
-  width="300"
-  height="200"
-  src="https://www.canva.com/design/DAG-Nd3q5AI/7-SBKxmsaA3JwQnLGgQG0w/edit?utm_content=DAG-Nd3q5AI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">
-</iframe>
-
+<br>
+<br>
 <br>
 
 

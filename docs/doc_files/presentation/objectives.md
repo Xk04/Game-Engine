@@ -2,6 +2,7 @@
 
 \> [Home](../../../README.md)
 
+\> Previous : [*Presentation*](./presentation.md)
 
 ### Presentation : *Objectives for the game engine*
 
@@ -15,7 +16,7 @@ Which choices ?
 
 Choices that allow us (or anybody who use the engine) to add any features we want.  
 For instance, if tomorrow we want to add a new behavior for ennemies we (and you) can do it easily.  
-Then we have to update anything we need in a concrete level : the instantiation of entities,map, behaviors, ...
+Then we have to update anything we need in a concrete level : the instantiation of entities, map, behaviors, ...
 
 </br>
 
@@ -44,6 +45,4 @@ For more informations on these components, we advise you to check the **architec
 
 </br>
 
-\> Previous : [*Presentation*](./presentation.md)
-
-\> Next : [*End*](../../../README.md)
+\> Next : [*Technologies used*](./technologies.md)
