@@ -4,10 +4,8 @@
 
 \> Previous : [*Features enabled*](./features.md)
 
-<br>
 
 ### Presentation : *How to use the project ?*
-
 
 #### How to compile the project ?
 
