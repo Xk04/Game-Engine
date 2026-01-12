@@ -1,0 +1,17 @@
+com
+com.controller
+com.controller.levels
+com.controller.levels.concreteLevels
+com.controller.managers
+com.model.components
+com.model.components.concreteComponents
+com.model.entities
+com.model.factories
+com.model.factories.caracterFactories
+com.model.factories.itemsFactories
+com.model.systems
+com.model.world
+com.view.camera
+com.view.render
+com.view.resources
+com.view.screen
