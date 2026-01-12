@@ -8,6 +8,10 @@
 
 This project uses **Javadoc** to document the source code (classes, methods, and parameters).
 
+#### Where can I see the java documentation ?
+
+You need to select the `/docs/javadoc/index.html` file of the project to open the detailed documentation of classes
+
 #### How to generate Javadoc
 
 The project uses **Gradle** to automate the generation of the documentation. To generate the HTML reports, run the command in your terminal at the root of the project:
@@ -22,5 +26,6 @@ If you encounter a `permission denied` error (common on macOS or Linux) while ru
 > ```bash
 > chmod +x gradlew
 > ```
+
 
 \> Next : [*End*](../../../README.md)
