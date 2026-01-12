@@ -17,6 +17,9 @@
 
 ![MVC image](../../UMLs/Game%20Engine%20UML.png)
 
+<br>
+<br>
+
 > **Model**
 
 ![MVC image](../../UMLs/Model.png)
