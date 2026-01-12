@@ -11,7 +11,6 @@
 
 You can use the `./gradlew build` command, but I advise you to just run the project if you just want to see the project in real time.
 
-<br>
 
 #### How to run the project ?
 
@@ -19,8 +18,6 @@ LibGDX is delivered with a tool named gradle. It allows us to create a windows a
 With the command `./gradlew lwjgl3:run` you can run the project.
 
 You can use another method with the gradle extension of your favorite IDE with this [tutorial](https://libgdx.com/wiki/start/import-and-running).
-
-<br>
 
 #### How to test the project ?
 
