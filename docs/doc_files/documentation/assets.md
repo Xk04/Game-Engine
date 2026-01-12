@@ -24,4 +24,6 @@ The engine uses `.tmx` files to link assets to the game logic:
     * **End**: A detection zone that triggers the end of the level.
     * **Walls**: Invisible objects placed at the map boundaries to block the player and stop the camera.
 
+<br>
+
 \> Next : [*End*](../../../README.md)
