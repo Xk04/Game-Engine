@@ -4,7 +4,7 @@
 
 \> Previous : [*Java Documentation*](./javadoc.md)
 
-### Documentation : *Assets*
+### Documentation : *Resources*
 
 This section details the graphical resources used and how they are structured to be exploited by the engine via Tiled.
 
