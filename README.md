@@ -32,7 +32,7 @@
 
 > ### Documentation
 
-- [Java Documentation](core/build/docs/javadoc/overview-tree.html)
+- [Java Documentation](docs/doc_files/documentation/javadoc.md)
 - [Resources](docs/doc_files/documentation/assets.md)
 
 <br>
