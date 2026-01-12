@@ -32,4 +32,4 @@ If you encounter a `permission denied` error (common on macOS or Linux) while ru
 > ```
 
 
-\> Next : [*End*](../../../README.md)
+\> Next : [*Resources*](./assets.md)
