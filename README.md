@@ -45,7 +45,7 @@
 
 > ### Examples
 
-- [Images of the game engine](docs/doc_files/examples/images)
+- [Images of the game engine](docs/doc_files/examples/images.md)
 
 <br>
 
