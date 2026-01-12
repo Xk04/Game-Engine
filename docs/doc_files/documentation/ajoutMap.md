@@ -2,7 +2,7 @@
 
 \> [Home](../../../README.md)
 
-\> Previous : [*Assets*](./assets.md)
+\> Previous : [*Resources*](./assets.md)
 
 ### Documentation : *Add a new map*
 
