@@ -26,4 +26,4 @@ The engine uses `.tmx` files to link assets to the game logic:
 
 <br>
 
-\> Next : [*End*](../../../README.md)
+\> Next : [*Add a new map*](./ajoutMap.md)
