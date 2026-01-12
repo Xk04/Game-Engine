@@ -82,6 +82,4 @@ To carry out the tests, we used JUnit to structure the tests and Hamcrest to pro
 <br>
 <br>
 
-\> Previous : [*Resources*](../documentation/assets.md)
-
 \> Next : [*Images of the game engine*](../examples/images.md)
