@@ -2,7 +2,6 @@
 
 \> [Home](../../../README.md)
 
-\> Previous : [_Overall UML_](../architecture/overall_uml.md)
 
 ### Documentation : _Java Documentation_
 
