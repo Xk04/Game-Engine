@@ -11,8 +11,6 @@
 
 #### Overall UML: [click here to see the interactive UML *](https://www.canva.com/design/DAG-Nd3q5AI/7-SBKxmsaA3JwQnLGgQG0w/edit?utm_content=DAG-Nd3q5AI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
-<br>
-
 ![MVC image](../../UMLs/Game%20Engine%20UML.png)
 
 <br>
