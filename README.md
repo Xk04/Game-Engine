@@ -34,6 +34,7 @@
 
 - [Java Documentation](docs/doc_files/documentation/javadoc.md)
 - [Resources](docs/doc_files/documentation/assets.md)
+- [Add a new map](docs/doc_files/documentation/ajoutMap.md)
 
 <br>
 
