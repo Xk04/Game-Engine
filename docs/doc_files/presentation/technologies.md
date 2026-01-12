@@ -6,18 +6,11 @@
 
 ### Presentation : *Technologies used*
 
+To build this project, we used the tools required for the course along with the testing libraries studied in class.
 
-
-
-
-
-
-
-
-
-
-
-
-
+* **LibGDX**: used for the development of the game engine.
+* **Tiled**: used for the creation and configuration of the maps. It allows us to design levels on a 32x32 grid and define collision layers and object positions
+* **JUnit & Hamcrest**: used for validation through unit testing
+* **GitHub**: used for version control. It allowed the team to collaborate and share code
 
 \> Next : [*Features enabled*](./features.md)
